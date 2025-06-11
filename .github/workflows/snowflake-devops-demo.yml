@@ -37,6 +37,10 @@ jobs:
           echo "Creating private key file"
           echo "$SF_PRIVATE_KEY" > private_key.p8
 
+          echo "Setting environment variables for Snowflake connector"
+          export PRIVATE_KEY_PATH=private_key.p8
+          export PRIVATE_KEY_PASSPHRASE="$SF_KEY_PASSPHRASE"
+
           echo "Running schemachange"
           schemachange -f $GITHUB_WORKSPACE/migrations \
             -a $SF_ACCOUNT \
@@ -44,9 +48,7 @@ jobs:
             -r $SF_ROLE \
             -w $SF_WAREHOUSE \
             -d $SF_DATABASE \
-            -c $SF_DATABASE.SCHEMACHANGE.CHANGE_HISTORY \
-            --private-key-path private_key.p8 \
-            --private-key-passphrase "$SF_KEY_PASSPHRASE"
+            -c $SF_DATABASE.SCHEMACHANGE.CHANGE_HISTORY
 
           echo "Cleaning up private key file"
           rm private_key.p8
