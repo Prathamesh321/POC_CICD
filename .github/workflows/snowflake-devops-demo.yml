@@ -46,7 +46,7 @@ jobs:
             -d $SF_DATABASE \
             -c $SF_DATABASE.SCHEMACHANGE.CHANGE_HISTORY \
             --private-key-path private_key.p8 \
-            --private-key-passphrase $SF_KEY_PASSPHRASE
+            --private-key-passphrase "$SF_KEY_PASSPHRASE"
 
           echo "Cleaning up private key file"
           rm private_key.p8
